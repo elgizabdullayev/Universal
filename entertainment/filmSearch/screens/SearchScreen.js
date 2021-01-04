@@ -1,63 +1,46 @@
 import React, {Component} from 'react';
 import { ScrollView, TextInput, View, Text, Image, TouchableOpacity, Button, Modal} from 'react-native';
-import {stylesFilm} from '../styles/stylesFilmSearch'
+import {mainStyles} from '../styles/mainStyles';
+import { connect } from 'react-redux';
+import { saveMovies, search } from '../redux/actions'
 
-export  class FilmSearch extends Component {
+class SearchScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: 'Film Search',
-      temp: 'Batman',
-      searchText: 'Batman',
-      data: [],
       show: false,
       activeItem: []
-
     };
   }
-  componentDidMount = async () => {
-    try {
-      const response = await fetch(`http://api.tvmaze.com/search/shows?q=${this.state.temp}`)
-      const data = await response.json()
-      this.setState({ data })
-      console.log({ data })
-    } catch (e){
-     console.log("Error")
-
-    }
-    }
-  tryToSearch = async ()=>{
-    try {
-      const response = await fetch(`http://api.tvmaze.com/search/shows?q=${this.state.searchText}`)
-      const data = await response.json()
-      this.setState({ data })
-      console.log({ data })
-    } catch (e){
-     console.log("Error")
-
-    }
-   }
+ 
   mainImage = 'https://via.placeholder.com/200x250?text=Film+Search'
+  searchText = 'batman'
+  componentDidMount(){
+    this.props.searching(this.searchText)
+  }
   
   render() {
+      console.log(this.props.info)
     return (
-      <View style={stylesFilm.container}>
-       <Text style={stylesFilm.titleName}>
+      <View style={mainStyles.container}>
+       <Text style={mainStyles.titleName}>
         {this.state.title}
        </Text>
-       <TextInput style={stylesFilm.search}
-        onChangeText={text => this.setState((prevState) => ({searchText : prevState.searchText = text}))}
+       <TextInput style={mainStyles.search}
+        onChangeText={text => this.searchText = text}
         placeholder='movie name is...'>
        </TextInput>
-       <TouchableOpacity onPress={this.tryToSearch} style={stylesFilm.touchableStyle}><Text style={stylesFilm.touchableText}>Search</Text></TouchableOpacity>
-       <ScrollView style={stylesFilm.results}>
-         {this.state.data.map((movies, index)=>{
+       <TouchableOpacity onPress={ () => this.props.searching(this.searchText)} style={mainStyles.touchableStyle}><Text style={mainStyles.touchableText}>Search</Text></TouchableOpacity>
+       <ScrollView style={mainStyles.results}>
+         {this.props.info.map((movies, index)=>{
            return (<View key={index}>
-             <Image style={stylesFilm.image}
+             <Image style={mainStyles.image}
              source={{uri: movies?.show?.image?.medium ?? this.mainImage}}></Image>
-            <Text style={stylesFilm.result}>
+            <Text style={mainStyles.result}>
               {movies.show.name}
             </Text>
+            <Button title="Make Favorite" onPress={()=>this.props.add(movies)}></Button>
             <Button title="More info..." onPress={()=>this.setState((prevState) => ({show : prevState.show = true, activeItem: prevState.activeItem = movies.show}))}></Button>
                     
            </View>)
@@ -65,12 +48,12 @@ export  class FilmSearch extends Component {
          }
        </ScrollView>
        
-<Modal visible={this.state.show} >
-            <ScrollView style={stylesFilm.results}>
+ <Modal visible={this.state.show} >
+            <ScrollView style={mainStyles.results}>
               <View >
-                <Image style={stylesFilm.image}
+                <Image style={mainStyles.image}
              source={{uri: this.state.activeItem?.image?.medium ?? this.mainImage}}></Image>
-             <Text style={stylesFilm.result}>
+             <Text style={mainStyles.result}>
               Name: {this.state.activeItem?.name ?? 'unavialable info'}{"\n"}
               Type: {this.state.activeItem?.type ?? 'unavialable info'}{"\n"}
               Language: {this.state.activeItem?.language ?? 'unavialable info'}{"\n"}
@@ -86,4 +69,18 @@ export  class FilmSearch extends Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+    return{
+        searching: (searchText) => dispatch(search(dispatch, searchText)),
+        add: (movie) => dispatch(saveMovies(movie))
 
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        info: state.reducer1.data
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchScreen);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { FilmSearch } from '../entertainment/FilmSearch';
+import { Main } from '../entertainment/filmSearch/navigation/tab';
 import { Calculator } from '../tools/Calculator';
 import {ToolsScreen, EntertainmentScreen} from '../screens/screens'
 const ToolsStack = createStackNavigator();
@@ -47,7 +47,7 @@ export const Entertainment=()=>{
         fontWeight: 'bold',
       },
     }}></EntertainmentStack.Screen>
-    <EntertainmentStack.Screen name ="filmSearch" component={FilmSearch}
+    <EntertainmentStack.Screen name ="filmSearch" component={Main}
     options={{
       title: 'Film Search',
       headerStyle: {
