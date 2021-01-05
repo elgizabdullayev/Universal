@@ -40,7 +40,7 @@ class SearchScreen extends Component {
             <Text style={mainStyles.result}>
               {movies.show.name}
             </Text>
-            <Button title="Make Favorite" onPress={()=>this.props.add(movies)}></Button>
+            <Button color='red' title="Make Favorite" onPress={()=>this.props.add(movies)}></Button>
             <Button title="More info..." onPress={()=>this.setState((prevState) => ({show : prevState.show = true, activeItem: prevState.activeItem = movies.show}))}></Button>
                     
            </View>)
@@ -79,7 +79,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
     return {
-        info: state.reducer1.data
+        info: state.reducer1.data,
+        list: state.reducer2.list
     }
 }
 

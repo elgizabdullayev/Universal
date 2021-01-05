@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { ScrollView,  View, Text, Image, Button, Modal} from 'react-native';
 import {mainStyles} from '../styles/mainStyles';
 import { connect } from 'react-redux';
+import { removeMovies } from '../redux/actions'
 
 class FavoritesScreen extends Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class FavoritesScreen extends Component {
               {movies.show.name}
             </Text>
             <Button title="More info..." onPress={()=>this.setState((prevState) => ({show : prevState.show = true, activeItem: prevState.activeItem = movies.show}))}></Button>
+            <Button color='red' title="Remove" onPress={()=>this.props.remove(movies)}></Button>
            </View>)
          })
          }
@@ -61,5 +63,9 @@ const mapStateToProps = state => {
         list: state.reducer2.list
     }
 }
-
-export default connect(mapStateToProps)(FavoritesScreen);
+const mapDispatchToProps = dispatch => {
+  return{
+      remove: (movie) => dispatch(removeMovies(movie))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritesScreen);
