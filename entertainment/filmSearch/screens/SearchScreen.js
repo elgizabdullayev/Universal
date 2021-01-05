@@ -71,7 +71,7 @@ class SearchScreen extends Component {
 }
 const mapDispatchToProps = dispatch => {
     return{
-        searching: (searchText) => dispatch(search(dispatch, searchText)),
+        searching: (searchText) => dispatch(search(searchText)),
         add: (movie) => dispatch(saveMovies(movie))
 
     }
