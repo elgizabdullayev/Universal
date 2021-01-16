@@ -4,10 +4,10 @@ let defaultState = {
     ]
    };
    
-   const reducer1 = (state = defaultState, action) => {
+   const reducerSearch = (state = defaultState, action) => {
+       console.log("THIS IS ACTION PAY", action.payload)
        switch (action.type) {
            case 'searchResult' :
-               console.log(action)
                return {...state, data: action.payload}
                
            default:
@@ -15,4 +15,4 @@ let defaultState = {
        }
    }
    
-   export default reducer1;
+   export default reducerSearch;

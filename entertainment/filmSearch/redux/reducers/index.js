@@ -1,4 +1,4 @@
-import reducer1 from './reducer1';
-import reducer2 from './reducer2';
+import reducerSearch from './reducerSearch';
+import reducerFav from './reducerFav';
 import { combineReducers } from 'redux';
-export default combineReducers({reducer1, reducer2});
+export default combineReducers({reducerFav, reducerSearch});

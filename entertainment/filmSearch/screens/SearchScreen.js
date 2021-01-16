@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { ScrollView, TextInput, View, Text, Image, TouchableOpacity, Button, Modal} from 'react-native';
 import {mainStyles} from '../styles/mainStyles';
 import { connect } from 'react-redux';
-import { saveMovies, search } from '../redux/actions'
+import { addMovie, search } from '../redux/actions'
 
 class SearchScreen extends Component {
   constructor(props) {
@@ -21,7 +21,6 @@ class SearchScreen extends Component {
   }
   
   render() {
-      console.log(this.props.info)
     return (
       <View style={mainStyles.container}>
        <Text style={mainStyles.titleName}>
@@ -40,7 +39,7 @@ class SearchScreen extends Component {
             <Text style={mainStyles.result}>
               {movies.show.name}
             </Text>
-            <Button color='red' title="Make Favorite" onPress={()=>this.props.add(movies)}></Button>
+            <Button color='red' title="Make Favorite" onPress={()=>this.props.add(movies, this.props.list)}></Button>
             <Button title="More info..." onPress={()=>this.setState((prevState) => ({show : prevState.show = true, activeItem: prevState.activeItem = movies.show}))}></Button>
                     
            </View>)
@@ -72,15 +71,15 @@ class SearchScreen extends Component {
 const mapDispatchToProps = dispatch => {
     return{
         searching: (searchText) => dispatch(search(searchText)),
-        add: (movie) => dispatch(saveMovies(movie))
+        add: (movie, list) => dispatch(addMovie(movie, list))
 
     }
 }
 
 const mapStateToProps = state => {
     return {
-        info: state.reducer1.data,
-        list: state.reducer2.list
+        info: state.reducerSearch.data,
+        list: state.reducerFav.list
     }
 }
 
