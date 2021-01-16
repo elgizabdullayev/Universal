@@ -16,17 +16,17 @@ const fetchApi=(searchText)=>{
 
 function* workerSearch(action){
     console.log('action is', action)
-    const movies = yield call(fetchApi, action.payload)
+    const movies = yield call(fetchApi(action.payload))
     console.log('data is', movies)
     yield put(searchResult(movies))
 }
-function checkMovie(payload){
+const checkMovie=(payload)=>{
     if(!payload.list.includes(payload.movie)){
         return movie
     }
 }
 function* workerAdd(action){
-    const filteredMovie = yield call(checkMovie, action.payload);
+    const filteredMovie = yield call(checkMovie(action.payload));
     yield call(()=>{
         if(filteredMovie !== undefined){
             put(saveMovies(filteredMovie))
@@ -45,6 +45,6 @@ function* workerRemove(action){
 
 export function* watchSearch() {
     yield takeEvery('SEARCH', workerSearch)
-    // yield takeEvery('ADD_FAV', workerAdd)
-    // yield takeEvery('REMOVE_MOV', workerRemove)
+    yield takeEvery('ADD_FAV', workerAdd)
+    yield takeEvery('REMOVE_MOV', workerRemove)
 }
