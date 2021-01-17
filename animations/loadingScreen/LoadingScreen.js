@@ -14,77 +14,26 @@ export default class LoadingScreen extends Component{
         this.animatedCircle5 = new Animated.Value(20)
     }
     animation() {
+      const circleAnim = function (value, toValue, duration){
+        return Animated.timing(
+        value,{
+          toValue,
+          duration,
+          useNativeDriver: false
+        }
+        )
+      }
             Animated.stagger(500,[
-                Animated.timing(
-                    this.animatedCircle1,{
-                        toValue:-10,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
-                  Animated.timing(
-                    this.animatedCircle2,{
-                        toValue:0,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
-                  Animated.timing(
-                    this.animatedCircle3,{
-                        toValue:10,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
-                  Animated.timing(
-                    this.animatedCircle4,{
-                        toValue:20,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
-                  Animated.timing(
-                    this.animatedCircle5,{
-                        toValue:100,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
-                  Animated.timing(
-                    this.animatedCircle5,{
-                        toValue:20,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
-                  Animated.timing(
-                    this.animatedCircle4,{
-                        toValue:10,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
-                  Animated.timing(
-                    this.animatedCircle3,{
-                        toValue:0,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
-                  Animated.timing(
-                    this.animatedCircle2,{
-                        toValue:-10,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
-                  Animated.timing(
-                    this.animatedCircle1,{
-                        toValue:-100,
-                        duration: 100,
-                        useNativeDriver: false
-                    }
-                  ),
+              circleAnim(this.animatedCircle1, -10, 100),
+              circleAnim(this.animatedCircle2, 0, 100),
+              circleAnim(this.animatedCircle3, 10, 100),
+              circleAnim(this.animatedCircle4, 20, 100),
+              circleAnim(this.animatedCircle5, 100, 100),
+              circleAnim(this.animatedCircle5, 20, 100),
+              circleAnim(this.animatedCircle4, 10, 100),
+              circleAnim(this.animatedCircle3, 0, 100),
+              circleAnim(this.animatedCircle2, -10, 100),
+              circleAnim(this.animatedCircle1, -100, 100)
             ]).start(()=>this.animation())
     }
     componentDidMount(){
@@ -93,17 +42,22 @@ export default class LoadingScreen extends Component{
     render() {
         return(
             <View style={styles.mainView}>
-            <Animated.View style={{transform: [{translateX: this.animatedCircle1}]}} ><View style={styles.circle}/>
-            </Animated.View>
-            <Animated.View style={{transform: [{translateX: this.animatedCircle2}]}} ><View style={styles.circle}/>
-            </Animated.View>
-            <Animated.View style={{transform: [{translateX: this.animatedCircle3}]}} ><View style={styles.circle}/>
-            </Animated.View>
-            <Animated.View style={{transform: [{translateX: this.animatedCircle4}]}} ><View style={styles.circle}/>
-            </Animated.View>
-            <Animated.View style={{transform: [{translateX: this.animatedCircle5}]}} ><View style={styles.circle}/>
-            </Animated.View>
-            </View>
+           <Animated.View style={{transform: [{translateX: this.animatedCircle1}]}}>
+           <View style={styles.circle}/>
+          </Animated.View>
+          <Animated.View style={{transform: [{translateX: this.animatedCircle2}]}}>
+           <View style={styles.circle}/>
+          </Animated.View>
+          <Animated.View style={{transform: [{translateX: this.animatedCircle3}]}}>
+           <View style={styles.circle}/>
+          </Animated.View>
+          <Animated.View style={{transform: [{translateX: this.animatedCircle4}]}}>
+           <View style={styles.circle}/>
+          </Animated.View>
+          <Animated.View style={{transform: [{translateX: this.animatedCircle5}]}}>
+           <View style={styles.circle}/>
+          </Animated.View>
+          </View>
         );
     }
 };

@@ -1,3 +1,5 @@
+import { SEARCH_RESULT } from "../../consts/strings";
+
 let defaultState = {
     data: [
         
@@ -5,9 +7,8 @@ let defaultState = {
    };
    
    const reducerSearch = (state = defaultState, action) => {
-       console.log("THIS IS ACTION PAY", action.payload)
        switch (action.type) {
-           case 'searchResult' :
+           case SEARCH_RESULT :
                return {...state, data: action.payload}
                
            default:

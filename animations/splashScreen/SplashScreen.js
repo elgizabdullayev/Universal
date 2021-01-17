@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {Animated, View, Image, Text,  TouchableOpacity, Modal} from 'react-native';
+import {Animated, View,Text,} from 'react-native';
 import {styles} from './style';
-import LoadingScreen from '../loadingScreen/LoadingScreen'
+import {Planet} from '../../assets/svg/planet'
 
 
 
@@ -19,6 +19,15 @@ export default class SplashScreen extends Component{
         this.opacityValue = new Animated.Value(0)
     }
     animation(){
+        const planetAnim = function (value, toValue, duration){
+            return Animated.timing(
+            value,{
+              toValue,
+              duration,
+              useNativeDriver: false
+            }
+            )
+          }
     Animated.stagger(7000, [
         Animated.parallel([
             Animated.spring(
@@ -30,72 +39,17 @@ export default class SplashScreen extends Component{
                   useNativeDriver: false
                 }  
               ), 
-              Animated.timing(
-                this.textTranslate,{
-                    toValue:0,
-                    duration: 2500,
-                    useNativeDriver: false
-                }
-              ),
-              Animated.timing(
-                this.planetTranslate,{
-                    toValue:100,
-                    duration: 2500,
-                    useNativeDriver: false
-                }
-              ),
-              Animated.timing(
-                this.planetBigTranslate,{
-                    toValue:-50,
-                    duration: 3500,
-                    useNativeDriver: false
-                }
-              ),
-              Animated.timing(
-                this.planetLittleTranslate,{
-                    toValue:150,
-                    duration: 5500,
-                    useNativeDriver: false
-                }
-              ),
+              planetAnim(this.textTranslate,0,2500),
+              planetAnim(this.planetTranslate,100,2500),
+              planetAnim(this.planetBigTranslate,-50,3500),
+              planetAnim(this.planetLittleTranslate,150,5500),
         ]),
-        
         Animated.parallel([
-            Animated.timing(
-                this.scaleValue,{
-                  toValue: 17,
-                  duration: 3500,
-                  useNativeDriver: false
-                }
-            ),
-            Animated.timing(
-                this.textTranslate,{
-                    toValue:-350,
-                    duration: 2500,
-                    useNativeDriver: false
-                }
-            ),
-            Animated.timing(
-                this.planetTranslate,{
-                    toValue:350,
-                    duration: 2500,
-                    useNativeDriver: false
-                }
-              ),
-              Animated.timing(
-                this.planetBigTranslate,{
-                    toValue:350,
-                    duration: 2500,
-                    useNativeDriver: false
-                }
-              ),
-              Animated.timing(
-                this.planetLittleTranslate,{
-                    toValue:350,
-                    duration: 2500,
-                    useNativeDriver: false
-                }
-              ),
+            planetAnim(this.scaleValue,20,3500),
+            planetAnim(this.textTranslate,-350,2500),
+            planetAnim(this.planetTranslate,350,2500),
+            planetAnim(this.planetBigTranslate,350,2500),
+            planetAnim(this.planetLittleTranslate,350,2500),
               Animated.timing(
                 this.opacityValue,{
                     toValue:1,
@@ -119,23 +73,19 @@ export default class SplashScreen extends Component{
             <Animated.View style={{transform: [{translateX: this.planetBigTranslate}]}}>
                 <View style={styles.circleBig}></View>
             </Animated.View>
-            <Animated.Image source={require('../images/logo.png')} style={styles.logoStyle, 
+             <Animated.View style={styles.logoStyle, 
                 {transform: [{scale: this.scaleValue}]}
-                }/>
+                }>
+                   <View>
+                       <Planet/>
+                    </View> 
+                </Animated.View>
             <Animated.View style={{transform: [{translateX: this.textTranslate}]}}>
                  <Text style={styles.logoTextStyle}>Universal</Text>
                  </Animated.View>
             <Animated.View style={{transform: [{translateX: this.planetLittleTranslate}]}}>
                 <View style={styles.circleLittle}></View>
             </Animated.View>
-            <Animated.View style={{opacity: this.opacityValue }}>
-                <TouchableOpacity onPress={()=>this.setState( {showLoading: true})}>
-                <Image source={require('../images/play.png')} style={styles.playStyle} />
-                </TouchableOpacity>
-            </Animated.View>
-            <Modal visible={this.state.showLoading} >
-            <LoadingScreen/>
-            </Modal>
             </View>
         );
     }

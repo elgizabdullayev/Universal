@@ -1,3 +1,5 @@
+import { DELETE_MOV, SAVE_MOVIES } from "../../consts/strings"
+
 let initialState = {
     list: []
    }
@@ -5,10 +7,10 @@ let initialState = {
    const reducerFav = (state = initialState, action) => {
        switch (action.type) {
         
-        case 'removeMovies' : 
+        case DELETE_MOV : 
             return { list: [ action.payload ]}
             
-        case 'saveMovies' : 
+        case SAVE_MOVIES : 
       
             return { ...state, list: [ action.payload ]}
            

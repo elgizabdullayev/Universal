@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Main } from '../entertainment/filmSearch/navigation/tab';
 import { Calculator } from '../tools/Calculator';
-import {ToolsScreen, EntertainmentScreen} from '../screens/screens'
+import {ToolsScreen} from '../screens/ToolsScreen'
+import {EntertainmentScreen} from '../screens/EntertainmentScreen'
 const ToolsStack = createStackNavigator();
 const EntertainmentStack = createStackNavigator();
 export const Tools =()=>{

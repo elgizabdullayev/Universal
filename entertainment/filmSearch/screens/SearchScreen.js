@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import { ScrollView, TextInput, View, Text, Image, TouchableOpacity, Button, Modal} from 'react-native';
 import {mainStyles} from '../styles/mainStyles';
 import { connect } from 'react-redux';
-import { addMovie, search } from '../redux/actions'
+import { addMovie, search } from '../redux/actions';
+import LoadingScreen from '../../../animations/loadingScreen/LoadingScreen';
+import NetInfo from "@react-native-community/netinfo";
 
 class SearchScreen extends Component {
   constructor(props) {
@@ -10,16 +12,25 @@ class SearchScreen extends Component {
     this.state = {
       title: 'Film Search',
       show: false,
-      activeItem: []
+      activeItem: [],
     };
   }
- 
+  
   mainImage = 'https://via.placeholder.com/200x250?text=Film+Search'
   searchText = 'batman'
   componentDidMount(){
     this.props.searching(this.searchText)
+    this.listener()
   }
-  
+   componentWillUnmount(){
+    this.listener()
+   }
+   listener = () => { NetInfo.addEventListener(state => {
+     if(state.isInternetReachable === false){
+         alert('NO CONNECTION')
+     }
+   })
+ };
   render() {
     return (
       <View style={mainStyles.container}>
@@ -39,7 +50,7 @@ class SearchScreen extends Component {
             <Text style={mainStyles.result}>
               {movies.show.name}
             </Text>
-            <Button color='red' title="Make Favorite" onPress={()=>this.props.add(movies, this.props.list)}></Button>
+            <Button color='red' title="Make Favorite" onPress={()=>this.props.add(movies)}></Button>
             <Button title="More info..." onPress={()=>this.setState((prevState) => ({show : prevState.show = true, activeItem: prevState.activeItem = movies.show}))}></Button>
                     
            </View>)
@@ -63,6 +74,11 @@ class SearchScreen extends Component {
               </View>
               </ScrollView>
             </Modal>
+     {this.props.showSplash && 
+        <Modal transparent>
+            <LoadingScreen/>
+        </Modal>
+     }
       </View>
       
     );
@@ -71,7 +87,7 @@ class SearchScreen extends Component {
 const mapDispatchToProps = dispatch => {
     return{
         searching: (searchText) => dispatch(search(searchText)),
-        add: (movie, list) => dispatch(addMovie(movie, list))
+        add: (movies) => dispatch(addMovie(movies))
 
     }
 }
@@ -79,7 +95,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
     return {
         info: state.reducerSearch.data,
-        list: state.reducerFav.list
+        list: state.reducerFav.list,
+        showSplash: state.reducerLoad.showSplash
     }
 }
 

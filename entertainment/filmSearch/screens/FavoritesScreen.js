@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { ScrollView,  View, Text, Image, Button, Modal} from 'react-native';
 import {mainStyles} from '../styles/mainStyles';
 import { connect } from 'react-redux';
-import { remove } from '../redux/actions'
+import { removeMovies } from '../redux/actions'
 
 class FavoritesScreen extends Component {
   constructor(props) {
@@ -63,9 +63,8 @@ const mapStateToProps = state => {
         list: state.reducerFav.list
     }
 }
-const mapDispatchToProps = dispatch => {
-  return{
-      remove: (movie, list) => dispatch(remove(movie, list))
-  }
-}
+const mapDispatchToProps = dispatch =>{
+  return{remove : (movie) => dispatch(removeMovies(movie)) 
+}}
+
 export default connect(mapStateToProps, mapDispatchToProps)(FavoritesScreen);

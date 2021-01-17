@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {ProfileTab, SettingsTab} from '../screens/screens'
+import {ProfileTab} from '../screens/ProfileTab'
+import {SettingsTab} from '../screens/SettingsTab'
 const AboutMeTab = createBottomTabNavigator();
 export const AboutMe =()=>{
   return(
