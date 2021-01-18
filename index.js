@@ -17,7 +17,8 @@ import { watchSearch } from './entertainment/filmSearch/saga/watcherSearch';
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    blacklist: ['reducerFav','reducerSearch'],
+    blacklist: ['reducerSearch'],
+    whitelist: ['reducerFav']
   }
   const persistedReducer = persistReducer(persistConfig, reducer)
   const sagaMiddleware = createSagaMiddleware();

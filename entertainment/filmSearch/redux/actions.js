@@ -12,6 +12,10 @@ export const removeMovies = (movie) => ({
     type: REMOVE_MOV,
     payload: movie
 })
+export const toRemove = (movie) =>({
+    type: 'TO_REMOVE',
+    payload: {movie}
+})
 
 export const search = (searchText) =>({
    type: SEARCH,

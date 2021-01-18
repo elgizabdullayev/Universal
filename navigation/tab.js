@@ -2,6 +2,8 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {ProfileTab} from '../screens/ProfileTab'
 import {SettingsTab} from '../screens/SettingsTab'
+import {Profile} from '../assets/svg/profile'
+import {About} from '../assets/svg/about'
 const AboutMeTab = createBottomTabNavigator();
 export const AboutMe =()=>{
   return(

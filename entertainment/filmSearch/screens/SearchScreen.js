@@ -31,6 +31,11 @@ class SearchScreen extends Component {
      }
    })
  };
+  checkMovie(movie){
+    if(!this.props.list.includes(movie)){
+      this.props.add(movie)
+    }  
+  }
   render() {
     return (
       <View style={mainStyles.container}>
@@ -50,7 +55,7 @@ class SearchScreen extends Component {
             <Text style={mainStyles.result}>
               {movies.show.name}
             </Text>
-            <Button color='red' title="Make Favorite" onPress={()=>this.props.add(movies)}></Button>
+            <Button color='red' title="Make Favorite" onPress={()=>this.checkMovie(movies)}></Button>
             <Button title="More info..." onPress={()=>this.setState((prevState) => ({show : prevState.show = true, activeItem: prevState.activeItem = movies.show}))}></Button>
                     
            </View>)

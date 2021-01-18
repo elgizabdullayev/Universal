@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { ScrollView,  View, Text, Image, Button, Modal} from 'react-native';
 import {mainStyles} from '../styles/mainStyles';
 import { connect } from 'react-redux';
-import { removeMovies } from '../redux/actions'
+import { toRemove } from '../redux/actions'
 
 class FavoritesScreen extends Component {
   constructor(props) {
@@ -14,8 +14,9 @@ class FavoritesScreen extends Component {
     };
   }
   mainImage = 'https://via.placeholder.com/200x250?text=Film+Search'
-
+  
   render() {
+    console.log("THIS IS LIST", this.props.list)
     return (
       <View style={mainStyles.container}>
        <Text style={mainStyles.titleName}>
@@ -58,13 +59,13 @@ class FavoritesScreen extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         list: state.reducerFav.list
     }
 }
 const mapDispatchToProps = dispatch =>{
-  return{remove : (movie) => dispatch(removeMovies(movie)) 
+  return{remove : (movie) => dispatch(toRemove(movie)) 
 }}
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavoritesScreen);
